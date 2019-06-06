@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "monaco-editor": "^0.17.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -24,6 +25,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "lint-staged": "^8.1.5",
+    "monaco-editor-webpack-plugin": "^1.7.0",
     "vue-template-compiler": "^2.6.10"
   },
   "gitHooks": {
