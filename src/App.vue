@@ -4,7 +4,7 @@
 
 <script>
 import * as monaco from 'monaco-editor'
-import SQLSnippets from './snippets'
+import SQLSnippets from '@/core/snippets'
 export default {
   name: 'App',
   props: {
@@ -32,7 +32,7 @@ export default {
       // 实例化snippets
       this.sqlSnippets = new SQLSnippets(monaco, ['${ }'])
       // 设置编辑器主题
-      monaco.editor.setTheme('vs-dark')
+      // monaco.editor.setTheme('vs-dark')
       // 设置编辑器语言
       monaco.languages.registerCompletionItemProvider('sql', {
         triggerCharacters: [' ', '.', '$'],
@@ -78,7 +78,7 @@ export default {
               ]
             }
           })
-        }, 20000)
+        }, 200)
       })
     }
   }
