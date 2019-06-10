@@ -59,7 +59,7 @@ export default class Snippets {
       return {
         suggestions: this.getDataBaseSuggest()
       }
-    } else if (lastToken === 'from') {
+    } else if (lastToken === 'from' || lastToken === 'join') {
       return {
         suggestions: Object.keys(this.dbSchema.tables).map(this.getTableSuggest)
       }
