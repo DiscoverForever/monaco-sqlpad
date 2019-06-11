@@ -75,7 +75,17 @@ export default {
                   name: 'password',
                   type: 'varchar'
                 }
-              ]
+              ],
+              goods: [
+                {
+                  name: 'price',
+                  type: 'varchar'
+                },
+                {
+                  name: 'origin_price',
+                  type: 'varchar'
+                }
+              ],
             }
           })
         }, 200)
