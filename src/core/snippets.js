@@ -3,10 +3,10 @@ import { keywords } from './keywords'
 export default class Snippets {
   constructor (monaco, customKeywords = [], dbSchema = { dbName: '', tables: [] }) {
     this.SORT_TEXT = {
-      Table: '0',
-      Column: '1',
-      Keyword: '2',
-      Database: '3'
+      Database: '0',
+      Table: '1',
+      Column: '2',
+      Keyword: '3'
     }
     this.customKeywords = customKeywords
     this.dbKeywords = [...keywords, ...customKeywords]
@@ -60,8 +60,10 @@ export default class Snippets {
         suggestions: this.getDataBaseSuggest()
       }
     } else if (lastToken === 'from' || lastToken === 'join') {
+      const tables = Object.keys(this.dbSchema.tables).map(this.getTableSuggest)
+      const databases = this.getDataBaseSuggest()
       return {
-        suggestions: Object.keys(this.dbSchema.tables).map(this.getTableSuggest)
+        suggestions: [...databases, ...tables]
       }
     } else if (lastToken === 'select') {
       return {
@@ -136,11 +138,11 @@ export default class Snippets {
    */
   getTableSuggest (name) {
     return {
-      label: name,
+      label: `${this.dbSchema.dbName}.${name}`,
       kind: this.monaco.languages.CompletionItemKind.Module,
       detail: '<table>',
       sortText: this.SORT_TEXT.Table,
-      insertText: name
+      insertText: `${this.dbSchema.dbName}.${name}`
     }
   }
 
