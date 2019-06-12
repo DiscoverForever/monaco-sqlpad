@@ -30,7 +30,9 @@ export default {
      */
     initEditor() {
       // 实例化snippets
-      this.sqlSnippets = new SQLSnippets(monaco, ['${ }'])
+      this.sqlSnippets = new SQLSnippets(monaco, ['${ }'], () => {
+        return []
+      })
       // 设置编辑器主题
       // monaco.editor.setTheme('vs-dark')
       // 设置编辑器语言
@@ -51,7 +53,7 @@ export default {
           suggestOnTriggerCharacters: true
         }
       )
-      // //监听变化
+      // 监听变化
       this.monacoEditor.onDidChangeModelContent(e => {
         this.caretOffset = e.changes[0].rangeOffset // 获取光标位置
         this.$emit('input', this.monacoEditor.getValue())
@@ -63,31 +65,42 @@ export default {
     getDbSchema() {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve({
-            dbName: 'test',
-            tables: {
-              user: [
+          resolve([{
+            dbName: 'db_bar',
+            tables: [
                 {
-                  name: 'username',
-                  type: 'varchar'
+                  tableName: 'user',
+                  tableColumns: [{
+                    fieldName: 'username'
+                  }]
                 },
                 {
-                  name: 'password',
-                  type: 'varchar'
-                }
-              ],
-              goods: [
-                {
-                  name: 'price',
-                  type: 'varchar'
+                  tableName: 'log',
+                  tableColumns: []
                 },
                 {
-                  name: 'origin_price',
-                  type: 'varchar'
-                }
-              ],
-            }
-          })
+                  tableName: 'goods',
+                  tableColumns: []
+                },
+            ]
+          },
+          {
+            dbName: 'db_foo',
+            tables: [
+                {
+                  tableName: 'price',
+                  tableColumns: []
+                },
+                {
+                  tableName: 'time',
+                  tableColumns: []
+                },
+                {
+                  tableName: 'updata_user',
+                  tableColumns: []
+                },
+            ]
+          }])
         }, 200)
       })
     }
