@@ -4,11 +4,11 @@
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name monaco-sqlpad src/index.js",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
-  "main": "dist/sqlpad.min.js",
+  "main": "dist/monaco-sqlpad.umd.min.js",
   "dependencies": {
     "core-js": "^2.6.5",
     "monaco-editor": "^0.17.0",
@@ -26,7 +26,9 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "lint-staged": "^8.1.5",
-    "monaco-editor-webpack-plugin": "^1.7.0",
+    "monaco-editor-webpack-plugin": "1.7.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.10"
   },
   "gitHooks": {

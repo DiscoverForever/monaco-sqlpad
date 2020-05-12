@@ -1,14 +1,11 @@
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const path = require('path')
+console.log(path.resolve('src/index.js'))
 module.exports = {
+  css: {
+    extract: false
+  },
   configureWebpack: {
-    entry: process.env.NODE_ENV === 'production' ? path.resolve('src/index.js') : path.resolve('src/main.js'),
-    output: {
-      library: 'Sqlpad',
-      filename: 'sqlpad.min.js',
-      libraryTarget: 'umd',
-      umdNamedDefine: true
-    },
     plugins: [new MonacoWebpackPlugin()]
   }
 }
