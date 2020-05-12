@@ -1,121 +1,185 @@
 <template>
-  <div id="container" />
+  <div ref="container" />
 </template>
 
 <script>
 import * as monaco from 'monaco-editor'
-import SQLSnippets from '@/core/snippets'
+import SQLSnippets from './core/snippets'
 export default {
-  name: 'App',
+  name: 'SqlEditor',
   props: {
     value: {
       type: String,
       default: ''
+    },
+    dbs: {
+      type: Array,
+      default: () => []
+    },
+    onInputField: {
+      type: Function,
+      default: () => []
+    },
+    onInputTableAlia: {
+      type: Function,
+      default: () => []
+    },
+    width: {
+      type: Number,
+      default: 500
+    },
+    height: {
+      type: Number,
+      default: 500
+    },
+    theme: {
+      type: String,
+      default: 'vs-dark'
+    },
+    options: {
+      type: Object,
+      default: () => ({
+        theme: 'vs-dark',
+        minimap: {
+          // 关闭代码缩略图
+          enabled: true
+        },
+        contextmenu: false,
+        suggestOnTriggerCharacters: true,
+        fontSize: '16px'
+      })
     }
   },
   data() {
     return {
       monacoEditor: null,
+      completionItemProvider: null,
       sqlSnippets: null
+    }
+  },
+  watch: {
+    dbs: {
+      deep: true,
+      async handler() {
+        this.sqlSnippets.setDbSchema(this.dbs)
+      }
+    },
+    width() {
+      this.monacoEditor.layout({ width: this.width, height: this.height })
+    },
+    height() {
+      this.monacoEditor.layout({ width: this.width, height: this.height })
+    },
+    theme() {
+      // 设置编辑器主题
+      this.monacoEditor.setTheme(this.theme)
     }
   },
   async mounted() {
     this.initEditor()
-    const dbSchema = await this.getDbSchema()
-    this.sqlSnippets.setDbSchema(dbSchema)
+  },
+  beforeDestroy() {
+    this.$emit('onDidChangeCursorSelection', '')
+    this.completionItemProvider.dispose()
+    this.monacoEditor.dispose()
   },
   methods: {
     /**
      * 初始化编辑器
      */
-    initEditor() {
+    async initEditor() {
       // 实例化snippets
-      this.sqlSnippets = new SQLSnippets(monaco, ['${ }'], () => {
-        return []
-      })
-      // 设置编辑器主题
-      // monaco.editor.setTheme('vs-dark')
+      this.sqlSnippets = new SQLSnippets(
+        monaco,
+        ['${ }', 'LEFT JOIN', 'RIGHT JOIN', 'GROUP BY', 'ORDER BY'],
+        this.onInputField,
+        this.onInputTableAlia,
+        this.dbs
+      )
       // 设置编辑器语言
-      monaco.languages.registerCompletionItemProvider('sql', {
-        triggerCharacters: [' ', '.', '$'],
-        provideCompletionItems: (model, position) =>
-          this.sqlSnippets.provideCompletionItems(model, position)
-      })
-      // 初始化编辑器
-      this.monacoEditor = monaco.editor.create(
-        document.getElementById('container'),
+      this.completionItemProvider = monaco.languages.registerCompletionItemProvider(
+        'sql',
         {
-          value: this.value,
-          language: 'sql',
-          minimap: {
-            enabled: true
-          },
-          suggestOnTriggerCharacters: true
+          triggerCharacters: [' ', '.', '$'],
+          provideCompletionItems: (model, position) =>
+            this.sqlSnippets.provideCompletionItems(model, position)
         }
       )
+      // 初始化编辑器
+      this.monacoEditor = monaco.editor.create(this.$refs.container, {
+        value: this.value,
+        language: 'sql',
+        ...this.options
+      })
+      // 重新渲染
+      this.monacoEditor.layout({ width: this.width, height: this.height })
       // 监听变化
       this.monacoEditor.onDidChangeModelContent(e => {
         this.caretOffset = e.changes[0].rangeOffset // 获取光标位置
         this.$emit('input', this.monacoEditor.getValue())
       })
-    },
-    /**
-     * 获取数据库表及表字段
-     */
-    getDbSchema() {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([{
-            dbName: 'db_bar',
-            tables: [
-                {
-                  tableName: 'user',
-                  tableColumns: [{
-                    fieldName: 'username'
-                  }]
-                },
-                {
-                  tableName: 'log',
-                  tableColumns: []
-                },
-                {
-                  tableName: 'goods',
-                  tableColumns: []
-                },
-            ]
-          },
-          {
-            dbName: 'db_foo',
-            tables: [
-                {
-                  tableName: 'price',
-                  tableColumns: []
-                },
-                {
-                  tableName: 'time',
-                  tableColumns: []
-                },
-                {
-                  tableName: 'updata_user',
-                  tableColumns: []
-                },
-            ]
-          }])
-        }, 200)
+      this.monacoEditor.onDidChangeCursorSelection(e => {
+        const selectedText = this.monacoEditor.getModel().getValueInRange({
+          startLineNumber: e.selection.startLineNumber,
+          startColumn: e.selection.startColumn,
+          endLineNumber: e.selection.endLineNumber,
+          endColumn: e.selection.endColumn
+        })
+        this.$emit('onDidChangeCursorSelection', selectedText)
       })
+      this.monacoEditor.addCommand(
+        monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
+        () => {
+          this.$emit('ctrl-enter')
+        }
+      )
+      this.monacoEditor.addCommand(
+        monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_I,
+        () => {
+          // 插入${ } 并移动光标至${|}
+          // 获取当前光标位置
+          const position = this.monacoEditor.getPosition()
+          // 新建range实例
+          const range = new monaco.Range(
+            position.lineNumber,
+            position.column,
+            position.lineNumber,
+            position.column
+          )
+          // 需插入文本配置
+          const options = {
+            range: range,
+            text: ' ${  }',
+            forceMoveMarkers: true
+          }
+          // 插入文本
+          this.monacoEditor.executeEdits('my-source', [options])
+          // 移动光标
+          this.monacoEditor.setPosition({
+            column: position.column + 3,
+            lineNumber: position.lineNumber
+          })
+        }
+      )
     }
   }
 }
 </script>
 
-<style>
-html,
-body {
-  width: 100%;
-  height: 100%;
-}
-#container {
-  width: 100%;
-  height: 100%;
+<style lang="scss" scoped>
+.sqlpad {
+  .container {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #dcdfe6;
+  }
+  .devide {
+    width: 100%;
+    height: 4px;
+    cursor: row-resize;
+    &:hover {
+      background: orange;
+    }
+  }
 }
 </style>
