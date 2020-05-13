@@ -3,7 +3,7 @@
 
 ### 安装
 ```bash
-npm i monaco-sqlpad --save-dev
+npm i monaco-sqlpad --save
 ```
 ### 使用
 ```javascript
