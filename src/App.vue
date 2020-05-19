@@ -34,12 +34,12 @@ export default {
     },
     theme: {
       type: String,
-      default: 'vs-dark'
+      default: 'vs'
     },
     options: {
       type: Object,
       default: () => ({
-        theme: 'vs-dark',
+        theme: 'vs',
         minimap: {
           // 关闭代码缩略图
           enabled: true
@@ -64,15 +64,26 @@ export default {
         this.sqlSnippets.setDbSchema(this.dbs)
       }
     },
-    width() {
-      this.monacoEditor.layout({ width: this.width, height: this.height })
+    width: {
+      immediate: true,
+      handler() {
+        this.monacoEditor &&
+          this.monacoEditor.layout({ width: this.width, height: this.height })
+      }
     },
-    height() {
-      this.monacoEditor.layout({ width: this.width, height: this.height })
+    height: {
+      immediate: true,
+      handler() {
+        this.monacoEditor &&
+          this.monacoEditor.layout({ width: this.width, height: this.height })
+      }
     },
-    theme() {
-      // 设置编辑器主题
-      this.monacoEditor.setTheme(this.theme)
+    theme: {
+      immediate: true,
+      handler() {
+        // 设置编辑器主题
+        monaco.editor.setTheme(this.theme)
+      }
     }
   },
   async mounted() {

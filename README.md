@@ -9,7 +9,7 @@ npm i monaco-sqlpad --save
 ```javascript
 <template>
   <div style="height:500px">
-    <monaco-sqlpad v-model="content" :on-input-field="onInputField" :dbs="dbs" :width.sync="500" :height.sync="500" />
+    <monaco-sqlpad v-model="content" :on-input-field="onInputField" :dbs="dbs" :width="500" :height="500" />
   </div>
 </template>
 <script>
@@ -29,7 +29,7 @@ export default {
     this.dbs = await this.getDbList()
   },
   methods: {
-    /**
+    /
      * 当用户需要输入表字段时回调方法
      * @return { Array } 表格字段数组
      */
