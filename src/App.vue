@@ -36,14 +36,18 @@ export default {
       type: String,
       default: 'vs'
     },
+    customKeywords: {
+      type: Array,
+      default: () => []
+    },
+    triggerCharacters: {
+      type: Array,
+      default: () => []
+    },
     options: {
       type: Object,
       default: () => ({
         theme: 'vs',
-        minimap: {
-          // 关闭代码缩略图
-          enabled: true
-        },
         contextmenu: false,
         suggestOnTriggerCharacters: true,
         fontSize: '16px'
@@ -102,7 +106,7 @@ export default {
       // 实例化snippets
       this.sqlSnippets = new SQLSnippets(
         monaco,
-        ['${ }', 'LEFT JOIN', 'RIGHT JOIN', 'GROUP BY', 'ORDER BY'],
+        this.customKeywords,
         this.onInputField,
         this.onInputTableAlia,
         this.dbs
@@ -111,7 +115,7 @@ export default {
       this.completionItemProvider = monaco.languages.registerCompletionItemProvider(
         'sql',
         {
-          triggerCharacters: [' ', '.', '$'],
+          triggerCharacters: [' ', '.', ...this.triggerCharacters],
           provideCompletionItems: (model, position) =>
             this.sqlSnippets.provideCompletionItems(model, position)
         }

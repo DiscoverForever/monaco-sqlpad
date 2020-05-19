@@ -616,7 +616,11 @@ const keyword = [
   'XOR',
   'YEAR',
   'YEAR_MONTH',
-  'ZEROFILL'
+  'ZEROFILL',
+  'LEFT JOIN',
+  'RIGHT JOIN',
+  'GROUP BY',
+  'ORDER BY'
 ]
 const operators = [
   'AND',
