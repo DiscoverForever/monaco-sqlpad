@@ -21,6 +21,8 @@ npm login # 登陆
 
 echo "-------\033[36mpublishing\033[0m-------"
 
+rm -rf dist # 删除dist历史文件
+
 npm run build # 打包
 
 npm publish # 发布
