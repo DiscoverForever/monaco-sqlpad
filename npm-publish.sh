@@ -21,6 +21,8 @@ npm login # 登陆
 
 echo "-------\033[36mpublishing\033[0m-------"
 
+npm run build # 打包
+
 npm publish # 发布
 
 echo "\033[36m 发布完成 \033[0m"
