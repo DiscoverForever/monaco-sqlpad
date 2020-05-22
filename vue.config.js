@@ -7,7 +7,8 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [new MonacoWebpackPlugin({
-      languages: ['sql']
+      languages: ['sql', 'mysql', 'pgsql'],
+      features: ['coreCommands', 'find']
     })]
   }
 }
