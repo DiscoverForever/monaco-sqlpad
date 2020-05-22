@@ -231,7 +231,7 @@ export default class Snippets {
    * @param {*} table
    * @param {*} column
    */
-  async getTableColumnSuggest(table, column) {
+  async getTableColumnSuggest() {
     const defaultFields = []
     this.dbSchema.forEach(db => {
       db.tables.forEach(table => {
