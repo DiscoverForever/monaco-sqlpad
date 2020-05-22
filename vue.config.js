@@ -2,8 +2,10 @@ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 const path = require('path')
 console.log(path.resolve('src/index.js'))
 module.exports = {
+  productionSourceMap: false,
   css: {
-    extract: false
+    extract: false,
+    sourceMap: false
   },
   configureWebpack: {
     plugins: [new MonacoWebpackPlugin({
