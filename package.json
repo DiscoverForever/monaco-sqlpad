@@ -11,7 +11,7 @@
   "main": "dist/monaco-sqlpad.umd.min.js",
   "dependencies": {
     "core-js": "^2.6.5",
-    "monaco-editor": "^0.17.0",
+    "monaco-editor": "^0.20.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
