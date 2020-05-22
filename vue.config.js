@@ -6,6 +6,8 @@ module.exports = {
     extract: false
   },
   configureWebpack: {
-    plugins: [new MonacoWebpackPlugin()]
+    plugins: [new MonacoWebpackPlugin({
+      languages: ['sql']
+    })]
   }
 }
