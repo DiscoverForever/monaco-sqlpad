@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import * as monaco from 'monaco-editor'
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
 import SQLSnippets from './core/snippets'
 export default {
   name: 'SqlEditor',
