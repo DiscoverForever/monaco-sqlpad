@@ -4,6 +4,7 @@
 
 <script>
 import * as monaco from 'monaco-editor'
+import 'monaco-editor/esm/vs/basic-languages/sql/sql.contribution'
 import SQLSnippets from './core/snippets'
 export default {
   name: 'SqlEditor',
