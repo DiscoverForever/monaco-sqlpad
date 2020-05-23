@@ -1,6 +1,6 @@
 {
   "name": "monaco-sqlpad",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -29,7 +29,8 @@
     "monaco-editor-webpack-plugin": "^1.9.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "worker-loader": "^2.0.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
