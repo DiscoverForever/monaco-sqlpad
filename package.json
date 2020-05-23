@@ -1,10 +1,10 @@
 {
   "name": "monaco-sqlpad",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name monaco-sqlpad src/index.js",
+    "build": "vue-cli-service build --target lib --mode lib --name monaco-sqlpad src/index.js",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
