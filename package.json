@@ -1,6 +1,6 @@
 {
   "name": "monaco-sqlpad",
-  "version": "1.0.46",
+  "version": "1.0.47",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
