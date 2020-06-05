@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
+  "keywords": ["monaco-sqlpad", "monaco-editor", "monaco", "sql", "sqlpad", "vue-monaco", "monaco-sql", "vue"],
   "main": "dist/monaco-sqlpad.umd.min.js",
   "dependencies": {
     "core-js": "^2.6.5",
