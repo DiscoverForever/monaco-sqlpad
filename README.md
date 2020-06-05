@@ -5,6 +5,42 @@
 ```bash
 npm i monaco-sqlpad --save
 ```
+
+### webpack配置
+```javascript
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+module.exports = {
+  configureWebpack: {
+    plugins: [new CopyWebpackPlugin(
+      {
+        patterns: [
+          {
+            context: 'node_modules/monaco-sqlpad/dist/',
+            from: '*.umd.min.*.js',
+            to: 'js/',
+            toType: 'dir'
+          },
+          {
+            from: 'node_modules/monaco-sqlpad/dist/editor.worker.js',
+            to: 'editor.worker.js',
+            toType: 'file'
+          },
+          {
+            context: 'node_modules/monaco-sqlpad/dist/',
+            from: 'fonts',
+            to: 'js/fonts',
+            toType: 'dir'
+          }
+        ]
+      }
+    )]
+  }
+}
+```
+
+[为何需要配置webpack?](https://www.jianshu.com/writer#/notebooks/23626922/notes/71015980/preview)
+
 ### 使用
 ```javascript
 <template>
@@ -98,7 +134,7 @@ export default {
 
 ```
 
-## futurev
+## future
 
 future |
 ---------|
