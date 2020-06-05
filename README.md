@@ -1,7 +1,8 @@
 ### monaco-sqlpad
 #### 基于微软vscode开源的monaco-editor的sql编辑器，支持SQL语法高亮、提示，支持表名、字段提示
 ### 示例
-![示例](https://upload-images.jianshu.io/upload_images/11287122-4144e05bc44ea803.png)
+![preview.gif](https://upload-images.jianshu.io/upload_images/11287122-31aabe9832be213f.gif?imageMogr2/auto-orient/strip)
+
 ### 安装
 ```bash
 npm i monaco-sqlpad --save
