@@ -41,7 +41,7 @@ module.exports = {
 }
 ```
 
-[为何需要配置webpack?](https://www.jianshu.com/writer#/notebooks/23626922/notes/71015980/preview)
+[为何需要配置webpack?](https://www.jianshu.com/p/033713c39ef9)
 
 ### 使用
 ```javascript
