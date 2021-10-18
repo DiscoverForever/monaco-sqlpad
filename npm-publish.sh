@@ -13,7 +13,7 @@ echo '\033[36m版本号修改成功\033[0m'
 
 npm config get registry # 检查仓库镜像库
 
-npm config set registry=http://registry.npmjs.org # 设置仓库镜像库: 淘宝镜像https://registry.npm.taobao.org
+npm config set registry=https://registry.npmjs.org # 设置仓库镜像库: 淘宝镜像https://registry.npm.taobao.org
 
 echo '\033[36m请进行登录相关操作：\033[0m'
 
