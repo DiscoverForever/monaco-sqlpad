@@ -62,6 +62,11 @@ export default {
     }
   },
   watch: {
+    value: {
+      handler(newValue) {
+        this.monacoEditor.setValue(newValue)
+      }
+    },
     dbs: {
       deep: true,
       async handler() {
